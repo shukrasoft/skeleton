@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+
+<%= erb :_head, locals: { copy: @copy } %>
+
+<body>
+    <div id="page">
+        <h1>Welcome!</h1>
+        <button onclick="window.location = '/logout'">Logout</button>
+    </div>
+</body>
+
+</html>
