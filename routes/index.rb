@@ -9,6 +9,11 @@ get '/help' do
     erb :help, locals: { copy: @copy }
 end
 
+get '/about' do
+    @copy = $env.default_copy
+    erb :about, locals: { copy: @copy }
+end
+
 get '/robots.txt' do
     content_type 'text/plain'
     <<~ROBOTS

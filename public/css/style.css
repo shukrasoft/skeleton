@@ -1,12 +1,16 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: lightgrey;
+    font-family: sans-serif;
+}
+
+div#wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden;
-    background-color: lightgrey;
 }
 
 div#page {
@@ -35,6 +39,13 @@ div.column {
 .buttons button {
     margin-left: 0px;
     margin-right: 16px;
+}
+
+.buttons.top-left {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    z-index: 1000;
 }
 
 button {

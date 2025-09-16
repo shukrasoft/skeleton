@@ -6,6 +6,8 @@ Cache = Struct.new(:cached_at, :data, :expiry) do
     end
 end
 
+User = Struct.new(:username)
+
 class Environment
     attr_reader :data
     attr_accessor :given_tokens
@@ -14,7 +16,7 @@ class Environment
         if File.file?(ENV_FILE_PATH)
             require 'yaml'
             @data = YAML.load_file(ENV_FILE_PATH)
-            @given_tokens = []
+            @given_tokens = {}
         else
             puts "ERROR: 'environment.yml' file is missing..."
             exit
@@ -30,28 +32,39 @@ class Environment
     end
     
     def default_copy
-        { title: "Shukra" }
+        {
+            title: @data.dig('title'),
+            licensee: @data.dig('licensee'),
+        }
     end
 
-    def new_token
+    def new_token(user)
         token = Array.new(12) { [*'0'..'9', *'a'..'z', *'A'..'Z'].sample }.join
-        @given_tokens << token
+        @given_tokens[token] = user
         return token
     end
     
     def check_attempt(attempt)
         username, password = attempt[:username], attempt[:password]
         user = @data.dig('users', username)
-        return user && (user['password'] == password)
+        if user && (user['password'] == password)
+            return User.new(username)
+        else
+            return nil
+        end
     end
 
     def check_cookie(cookie)
-        self.given_tokens.include?(cookie)
+        @given_tokens.keys.include?(cookie)
     end
 
     def check_api_key(api_key)
         all_api_keys = @data.dig('users').map { |_, data| data.dig('api_keys') }.flatten
         return all_api_keys.include?(api_key)
+    end
+
+    def cookie_user(cookie)
+        @given_tokens[cookie]
     end
 end
 

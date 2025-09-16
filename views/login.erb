@@ -4,13 +4,16 @@
 <%= erb :_head, locals: { copy: @copy } %>
 
 <body>
-    <div id="page">
-        <div class="column">
-            <input id="username" class="mb" placeholder="Username...">
-            <input id="password" class="mb" placeholder="Password..." type="password">
-            <div class="buttons">
-                <button onclick="submitAttempt()">Submit</button>
-                <button onclick="window.location ='/help'">Help</button>
+    <div id="wrapper">
+        <div id="page">
+            <div class="column">
+                <input id="username" class="mb" placeholder="Username...">
+                <input id="password" class="mb" placeholder="Password..." type="password">
+                <div class="buttons">
+                    <button onclick="submitAttempt()">Submit</button>
+                    <button onclick="window.location ='/help'">Help</button>
+                    <button onclick="window.location ='/about'">About</button>
+                </div>
             </div>
         </div>
     </div>
